@@ -10,8 +10,12 @@ import _ from "lodash";
 
 
 export const renderField = ({
-                                input, placeholder, type, meta: { touched, error },
-                            }) => {
+        input, 
+        placeholder, 
+        type, 
+        meta: { touched, error },
+        disabled=false
+        }) => {
     const invalid = touched && error;
     return (
         <div>
@@ -19,6 +23,7 @@ export const renderField = ({
                 {...input}
                 placeholder={placeholder}
                 type={type}
+                disabled={disabled}
                 className={classNames('form-control', { 'is-invalid': invalid })}
             />
             {invalid && (
@@ -31,8 +36,12 @@ export const renderField = ({
 };
 
 export const renderTextArea = ({
-                                   input, placeholder, rows, meta: { touched, error },
-                               }) => {
+        input, 
+        placeholder, 
+        rows, 
+        meta: { touched, error },
+        disabled=false
+        }) => {
     const invalid = touched && error;
     return (
         <div>
@@ -41,6 +50,7 @@ export const renderTextArea = ({
           placeholder={placeholder}
           style={{ resize: 'none' }}
           rows={rows || 3}
+          disabled={disabled}
           className={classNames('form-control', { 'is-invalid': invalid })}
       />
             {invalid && (
@@ -82,8 +92,11 @@ export const renderNumber = ({
 };
 
 export const renderCurrency = ({
-                                   input, meta: { touched, error }, prefix="Q ", placeholder,
-                               }) => {
+        input, 
+        meta: { touched, error }, 
+        prefix="Q ", placeholder,
+        disabled=false
+        }) => {
     const invalid = touched && error;
     return (
         <div>
@@ -95,6 +108,7 @@ export const renderCurrency = ({
                 value={input.value}
                 thousandSeparator
                 prefix={prefix}
+                disabled={disabled}
                 onValueChange={(values) => {
                     input.onChange(values.value);
                 }}
