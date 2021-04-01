@@ -8,6 +8,7 @@ import usuarios from './modules/usuarios/usuarios';
 import notificaciones from './modules/notificaciones/notificaciones';
 import producto from './modules/producto/producto';
 import orden from './modules/orden/orden';
+import reportes from './modules/reportes/reportes';
 
 export default combineReducers({
     form: formReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
     routing,
     notificaciones,
     producto,
-    orden
+    orden,
+    reportes
 });

@@ -30,7 +30,7 @@ class SideBar extends Component {
                 <div className="nav-wrapper">
                     <ul className="nav--no-borders flex-column nav">
                         <li className="nav-item">
-                            <NavLink to="/" exact className="nav-link " activeClassName={'active'}>
+                            <NavLink to="/home" exact className="nav-link " activeClassName={'active'}>
                                 <div className="d-inline-block item-icon-wrapper">
                                     <i className="material-icons">edit</i>
                                 </div>
@@ -38,9 +38,17 @@ class SideBar extends Component {
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink to="/productos" className="nav-link" activeClassName={'active'}>
+                            <NavLink to="/catalogo-producto" className="nav-link" activeClassName={'active'}>
                                 <div className="d-inline-block item-icon-wrapper">
                                     <i className="material-icons">store</i>
+                                </div>
+                                <span>Tienda</span>
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/productos" className="nav-link" activeClassName={'active'}>
+                                <div className="d-inline-block item-icon-wrapper">
+                                    <i className="material-icons">inventory</i>
                                 </div>
                                 <span>Productos</span>
                             </NavLink>

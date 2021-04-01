@@ -29,6 +29,8 @@ import ProductoListaContainer from './common/components/Producto/ProductoListCon
 import CatalogoProductosList from './common/components/Catalogo/CatalogoProductosContainer';
 import VerDetalleProductoContainer from './common/components/Catalogo/VerProductoContainer';
 import VentaProductoContainer from './common/components/Venta/VentaProductoContainer';
+import DashboardVendedorContainer from './common/components/DashboardVendedor/dashboardVendedorContainer';
+
 
 module.exports = (
     <div>
@@ -40,7 +42,7 @@ module.exports = (
                 <CatalogoProductos exact path="/catalogo-productos/:id" component={VerDetalleProductoContainer} />
                 <CatalogoProductos exact path="/catalogo-productos/venta/:id" component={VentaProductoContainer} />
         
-                <ProtectedRoute exact path="/" component={Demo} />
+                <ProtectedRoute exact path="/home" component={DashboardVendedorContainer} />
                 <ProtectedRoute exact path="/page2" component={Examples} />
                 <ProtectedRoute exact path="/user-profile" component={Profile} />
                 <ProtectedRoute exact path="/grids" component={Grids} />
@@ -52,6 +54,12 @@ module.exports = (
                 <ProtectedRoute exact path="/productos/:id" component={ProductoCrearContainer} />
                 <ProtectedRoute exact path="/productos/:id/editar" component={ProductoCrearContainer} />
                 
+                <ProtectedRoute exact path="/catalogo-producto" component={CatalogoProductosList} />
+                <ProtectedRoute exact path="/catalogo-producto/:id" component={VerDetalleProductoContainer} />
+                <ProtectedRoute exact path="/catalogo-producto/venta/:id" component={VentaProductoContainer} />
+        
+
+
                 <Route component={NotFound} />
             </Switch>
         </div>

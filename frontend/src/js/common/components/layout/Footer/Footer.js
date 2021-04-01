@@ -9,7 +9,7 @@ class Footer extends Component {
                     <div className="row">
                         <ul className="nav">
                             <li className="nav-item">
-                                <Link className="nav-link" to="/">
+                                <Link className="nav-link" to="/home">
                                     Home
                                 </Link>
                             </li>
