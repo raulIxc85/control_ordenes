@@ -11,11 +11,12 @@ class VentaProducto extends Component{
     }
 
     render(){
-        const { lecturaProducto, guardarOrden } = this.props;
+        const { lecturaProducto, guardarOrden, match } = this.props;
         return(
             <Formulario
                 onSubmit = {guardarOrden}
                 lecturaProducto = {lecturaProducto}
+                match = {match}
             />
         );
     }

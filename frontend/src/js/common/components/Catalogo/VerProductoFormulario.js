@@ -6,7 +6,8 @@ import {
 
 class VerProductoFormulario extends Component{
     render(){
-        const { handleSubmit, lecturaProducto, guardarOrden } = this.props
+        const { handleSubmit, lecturaProducto, match } = this.props
+        let id = match.params.id
         return ( 
             <form onSubmit={handleSubmit} className='w-75'>
                 <h3>Ver Producto</h3>
@@ -32,7 +33,7 @@ class VerProductoFormulario extends Component{
                             </div>
                             <div className='d-flex flex-row justify-content-end mt-3'>
                                 <a
-                                    href="/#/catalogo-productos"
+                                    href={ id ? '/#/catalogo-producto' : '/#/catalogo-productos' }
                                     className='btn btn-secondary btn-sm mr-2 mb-3'
                                 >
                                     Cancelar

@@ -35,6 +35,7 @@ const verDetalleProducto = id => (dispatch) => {
 const guardarOrden = () => (dispatch, getStore) => {
     const formData = getStore().form.ventaProductoForm.values;
     let total = (parseFloat(formData.cantidad)*parseFloat(formData.precio));
+    console.log("id",formData) 
     const data = {
         cantidad: formData.cantidad,
         total: total,
@@ -47,11 +48,12 @@ const guardarOrden = () => (dispatch, getStore) => {
             'Exito',
             3000
         );
-        dispatch(push('/catalogo-productos'));
+        console.log("response",response);
+        dispatch(push('/catalogo-producto'));
     }).catch((error) => {
         console.log("error: ", error)
         NotificationManager.error(
-            'Ocurrió un error al guardar la orden',
+            'Ocurrió un error al guardar la orden / No puede comprar productos que usted mismo creó',
             'Error',
             0
         );

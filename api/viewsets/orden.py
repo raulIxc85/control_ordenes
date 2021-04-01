@@ -36,35 +36,46 @@ class OrdenViewset(viewsets.ModelViewSet):
 
                 user = request.user
                 usuario=User.objects.filter(username=request.user)
-                
-                if usuario is not None:
+               
+                if usuario:
+                    usuarioR = request.user.id
+                else:
                     buscar=User.objects.get(username='invitado')
                     usuarioR = buscar.id
-                else:
-                    usuarioR = user
-
+                
                 data = request.data
-                #validacion de los datos al serializer
-                serializer = OrdenSerializer(data=data)
-
-                if serializer.is_valid():
-                    #insertar los datos luego de validar
-                    Orden.objects.create(
-                        total = data.get("total"),
-                        usuario = User.objects.get(pk=usuarioR)
-                    )
-                    id = Orden.objects.latest('id')
-                    id_orden = Orden.objects.filter(pk=id.id,usuario=usuarioR)
-                    detalle = Detalle_orden.objects.create(
-                        cantidad = data.get("cantidad"),
-                        precio = data.get("precio"), 
-                        producto = Producto.objects.get(pk=data.get("id")),
-                        orden = id
-                    )
+                
+                #verificar usuario
+                verificar = Producto.objects.filter(pk=data.get("id"),usuario=usuarioR)
+                
+                if verificar:
+                    
+                    return Response({'mensaje': {'No puede comprar productos de usted mismo'} }, status=status.HTTP_400_BAD_REQUEST)
+                
                 else:
-                    print("error en la validacion de datos")
+                    
+                    #validacion de los datos al serializer
+                    serializer = OrdenRegistroSerializer(data=data)
+
+                    if serializer.is_valid():
+                        #insertar los datos luego de validar
+                        Orden.objects.create(
+                            total = data.get("total"),
+                            usuario = User.objects.get(pk=usuarioR)
+                        )
+                        id = Orden.objects.latest('id')
+                        id_orden = Orden.objects.filter(pk=id.id,usuario=usuarioR)
+                        detalle = Detalle_orden.objects.create(
+                            cantidad = data.get("cantidad"),
+                            precio = data.get("precio"), 
+                            producto = Producto.objects.get(pk=data.get("id")),
+                            orden = id
+                        )
+                    else:
+                        print("error en la validacion de datos")
             
-            return Response(serializer.data, status=status.HTTP_200_OK)
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+                    
         except Exception as e:
                 return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
     

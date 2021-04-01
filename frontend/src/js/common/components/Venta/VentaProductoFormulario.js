@@ -16,7 +16,8 @@ class VentaProductoFormulario extends Component{
         };
     }
     render(){
-        const { handleSubmit, lecturaProducto } = this.props
+        const { handleSubmit, lecturaProducto, match } = this.props
+        let id = match.params.id
         let total=0.00;
         return ( 
             <form onSubmit={handleSubmit} className='w-75'>
@@ -65,7 +66,7 @@ class VentaProductoFormulario extends Component{
                             </div>
                             <div className='d-flex flex-row justify-content-end mt-3'>
                                 <a
-                                    href="/#/catalogo-productos"
+                                    href={id ? '/#/catalogo-producto' : '/#/catalogo-productos' }
                                     className='btn btn-secondary btn-sm mr-2 mb-3'
                                 >
                                     Cancelar

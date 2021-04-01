@@ -12,11 +12,12 @@ class VerProducto extends Component{
     }
 
     render(){
-        const { lecturaProducto, guardarCarrito } = this.props;
+        const { lecturaProducto, guardarCarrito, match } = this.props;
         return(
             <Formulario
                 onSubmit = {guardarCarrito}
                 lecturaProducto = {lecturaProducto}
+                match = {match}
             />
         );
     }
