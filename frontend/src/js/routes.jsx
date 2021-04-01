@@ -28,6 +28,7 @@ import ProductoCrearContainer from './common/components/Producto/ProductoCrearCo
 import ProductoListaContainer from './common/components/Producto/ProductoListContainer';
 import CatalogoProductosList from './common/components/Catalogo/CatalogoProductosContainer';
 import VerDetalleProductoContainer from './common/components/Catalogo/VerProductoContainer';
+import VentaProductoContainer from './common/components/Venta/VentaProductoContainer';
 
 module.exports = (
     <div>
@@ -37,6 +38,7 @@ module.exports = (
                 <Route exact path="/registro" component={Registro} />
                 <CatalogoProductos exact path="/catalogo-productos" component={CatalogoProductosList} />
                 <CatalogoProductos exact path="/catalogo-productos/:id" component={VerDetalleProductoContainer} />
+                <CatalogoProductos exact path="/catalogo-productos/venta/:id" component={VentaProductoContainer} />
         
                 <ProtectedRoute exact path="/" component={Demo} />
                 <ProtectedRoute exact path="/page2" component={Examples} />

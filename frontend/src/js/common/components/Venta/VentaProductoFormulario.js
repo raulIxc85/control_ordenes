@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import {
-    renderNumber
+    renderNumber,
+    renderCurrency,
+    renderField
 } from "../Utils/renderField/renderField";
+import { validate, validators } from 'validate-redux-form';
 
-class VerProductoFormulario extends Component{
+
+class VentaProductoFormulario extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            totalVenta: 0.00
+        };
+    }
     render(){
-        const { handleSubmit, lecturaProducto, guardarOrden } = this.props
+        const { handleSubmit, lecturaProducto } = this.props
+        let total=0.00;
         return ( 
             <form onSubmit={handleSubmit} className='w-75'>
                 <h3>Ver Producto</h3>
@@ -28,6 +39,28 @@ class VerProductoFormulario extends Component{
                                 <Field
                                     name="cantidad"
                                     component={renderNumber}
+                                    onChange={(e, value)=>{
+                                        let cantidad = value;
+                                        let precio = lecturaProducto.precio;
+                                        total = cantidad*precio;
+                                        this.state.totalVenta = total;
+                                    }}
+                                />
+                                
+                            </div>
+                                <Field
+                                    name="precio"
+                                    component={renderField}
+                                    type="hidden" 
+                                />
+                               
+                            <div className='w-25'>
+                                <label htmlFor="total">Total</label>
+                                <Field
+                                    name="total"
+                                    input={ {value: this.state.totalVenta } }
+                                    component={renderCurrency}
+                                    disabled={true}
                                 />
                             </div>
                             <div className='d-flex flex-row justify-content-end mt-3'>
@@ -38,10 +71,10 @@ class VerProductoFormulario extends Component{
                                     Cancelar
                                 </a>
                                 <button
-                                    className='btn btn-sm mb-3 btn-primary'
+                                    className='btn btn-sm mb-3 mr-2 btn-primary'
                                     type='submit'
                                 >   
-                                    Agregar al carrito
+                                    Compra Directa
                                 </button>  
                                
                             </div>
@@ -55,6 +88,11 @@ class VerProductoFormulario extends Component{
 }
 
 export default reduxForm({
-    form: 'verProductoForm', //identificador unico
+    form: 'ventaProductoForm', //identificador unico
+    validate: (data) => {
+        return validate(data, {
+            cantidad: validators.exists()('Este campo es requerido'),
+        });
+    },
    
-})(VerProductoFormulario)
+})(VentaProductoFormulario)

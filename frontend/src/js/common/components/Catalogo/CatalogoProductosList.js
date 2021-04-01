@@ -71,6 +71,17 @@ class CatalogoProductosList extends Component{
                             }}
                         >
                         </TableHeaderColumn>
+                        <TableHeaderColumn
+                            dataField="id"
+                            dataAlign="center"
+                            dataSort
+                            dataFormat={(cell, row)=>{
+                                let ruta = window.location.href;
+                                return (<a className='btn btn-outline-dark btn-sm' href={ruta+'/venta/'+cell}>Compra Directa</a>);
+                                
+                            }}
+                        >
+                        </TableHeaderColumn>
                     </Grid>
                 }
             </React.Fragment>
