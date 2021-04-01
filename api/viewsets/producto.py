@@ -3,7 +3,7 @@ import json
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, viewsets, status
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.core.files import File
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
@@ -99,13 +99,21 @@ class ProductoViewset(viewsets.ModelViewSet):
             return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
+    @action(methods=["get"], detail=False)
+    def catalogo_productos(self, request):
+        productos = Producto.objects.filter(activo=True)
+        
+        #paginando el resultado
+        paginador = PageNumberPagination()
+        resultado_pagina = paginador.paginate_queryset(productos, request)
+        serializer = ProductoSerializer(resultado_pagina, many=True)
+        return paginador.get_paginated_response(serializer.data)
+
 
     def get_permissions(self):
-        """" Define permisos para este recurso """
-        permission_classes = [IsAuthenticated]
+        """ Define permisos para este recurso """
+        if self.action == "catalogo_productos" or self.action == 'retrieve':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [IsAuthenticated]
         return [permission() for permission in permission_classes]
-
-
-
-
-

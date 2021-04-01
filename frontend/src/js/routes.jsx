@@ -22,8 +22,12 @@ import Notificaciones from './common/components/Examples/Notificaciones';
 import ExampleTabs from './common/components/Examples/Tabs/Tabs';
 require('../style/index.css');
 
+import CatalogoProductos from './CatalogoProductos';
+
 import ProductoCrearContainer from './common/components/Producto/ProductoCrearContainer';
 import ProductoListaContainer from './common/components/Producto/ProductoListContainer';
+import CatalogoProductosList from './common/components/Catalogo/CatalogoProductosContainer';
+import VerDetalleProductoContainer from './common/components/Catalogo/VerProductoContainer';
 
 module.exports = (
     <div>
@@ -31,6 +35,9 @@ module.exports = (
             <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/registro" component={Registro} />
+                <CatalogoProductos exact path="/catalogo-productos" component={CatalogoProductosList} />
+                <CatalogoProductos exact path="/catalogo-productos/:id" component={VerDetalleProductoContainer} />
+        
                 <ProtectedRoute exact path="/" component={Demo} />
                 <ProtectedRoute exact path="/page2" component={Examples} />
                 <ProtectedRoute exact path="/user-profile" component={Profile} />

@@ -6,6 +6,8 @@ import { initialize as initializeForm } from 'redux-form';
 import { api } from "api";
 
 const IMAGEN_PRODUCTO = 'IMAGEN_PRODUCTOS';
+const LISTADO_PRODUCTOS = 'LISTADO_PRODUCTOS';
+const DETALLE_PRODUCTO = 'DETALLE_PRODUCTO';
 
 //  -----------------------------
 //  Constantes
@@ -29,8 +31,7 @@ const leer = id => (dispatch) => {
             'Error',
             0
         );
-    }).finally(() => {
-    });
+    })
 };
 
 const registroProducto = (data={}, attachments=[]) => (dispatch) => {
@@ -69,7 +70,56 @@ const editarProducto = (data={}, attachments) => (dispatch) => {
     })
 }
 
+const listarProductos = () => (dispatch) => {
+    api.get('producto/catalogo_productos').then((response) => {
+        dispatch({ type: LISTADO_PRODUCTOS, data: response });
+    }).catch((error) => {
+        console.log("error: ", error)
+        NotificationManager.error(
+            'Ocurrió un error al listar los productos',
+            'Error',
+            0
+        );
+    })
+};
 
+const verDetalle = id => (dispatch) => {
+    api.get(`producto/${id}`).then((response) => {
+        dispatch({ type: DETALLE_PRODUCTO, lecturaProducto: response });
+    }).catch((error) => {
+        console.log("error: ", error)
+        NotificationManager.error(
+            'Ocurrió un error al consultar producto',
+            'Error',
+            0
+        );
+    })
+};
+
+const guardarCarrito = () => (dispatch, getStore) => {
+    const formData = getStore().form.verProductoForm.values;
+    let ruta = window.location.href;
+    let datos = ruta.split('/');
+    const data = {
+        cantidad: formData.cantidad,
+        producto: datos[5],
+    }
+    api.post('/carrito', data).then((response) => {
+        NotificationManager.success(
+            'Se ha añadido el producto en el carrito correctamente',
+            'Exito',
+            3000
+        );
+        dispatch(push('/catalogo-productos'));
+    }).catch((error) => {
+        console.log("error: ", error)
+        NotificationManager.error(
+            'Ocurrió un error al guardar en el carrito',
+            'Error',
+            0
+        );
+    })
+}
 
 const borrarImagen = () => (dispatch) => {
     dispatch({ type: IMAGEN_PRODUCTO, imagen: null })
@@ -85,7 +135,10 @@ export const actions = {
     registroProducto,
     borrarImagen,
     leer,
-    editarProducto
+    editarProducto,
+    listarProductos,
+    verDetalle,
+    guardarCarrito
 }
 
 
@@ -95,6 +148,18 @@ export const reducers = {
         return {
             ...state,
             imagen,
+        }
+    },
+    [LISTADO_PRODUCTOS]: (state, { data }) => {
+        return {
+            ...state,
+            data,
+        }
+    },
+    [DETALLE_PRODUCTO]: (state, { lecturaProducto }) => {
+        return {
+            ...state,
+            lecturaProducto,
         }
     },
 }
